@@ -66,7 +66,6 @@ const handleClick = (key) => {
 };
 
 const addLetter = (letter) => {
-    // Fixed the syntax error here:
     if (currentTile < wordle.length && currentRow < 6) {
         const tile = document.getElementById('guessRow-' + currentRow + '-tile-' + currentTile);
         tile.textContent = letter;
@@ -115,7 +114,9 @@ const checkRow = () => {
                 setTimeout(nextLevel, 3000);
             } else {
                 setTimeout(() => {
-                    showMessage("Happy Mother's Day! ❤️");
+                    tileDisplay.innerHTML = '';
+                    
+                    showFinalMessage("Happy Mothers Day Love You Best Mom Ever! ❤️");
                     isGameOver = true;
                 }, 3000);
             }
@@ -136,6 +137,12 @@ const showMessage = (message) => {
     messageElem.textContent = message;
     messageDisplay.append(messageElem);
     setTimeout(() => messageDisplay.removeChild(messageElem), 2500);
+};
+
+const showFinalMessage = (message) => {
+    const messageElem = document.createElement('p');
+    messageElem.textContent = message;
+    messageDisplay.append(messageElem);
 };
 
 const addcolorToKey = (keyLetter, color) => {
@@ -174,3 +181,18 @@ const flipTile = () => {
         }, 500 * index);
     });
 };
+
+document.addEventListener('keydown', (e) => {
+    if (isGameOver) return;
+
+    const key = e.key.toUpperCase();
+
+    if (key === 'ENTER') {
+        handleClick('ENTER');
+    } else if (key === 'BACKSPACE') {
+        handleClick('<<');
+    } else if (/^[A-Z]$/.test(key)) {
+        // This regex ensures it's only a single letter A-Z
+        handleClick(key);
+    }
+});
