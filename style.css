@@ -15,30 +15,64 @@ body {
     align-items: center;
 }
 
-.title-container{
-    text-align: center;
-    width: 510px;
-    border-bottom: solid 1px #3a3a3c;
+.tile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 500px; /* Keeps it from getting too wide on PC */
+    margin: 0 auto;
 }
 
-.tile-container{
-    width: 330px;
-    margin-bottom: 30px;
+.tile-row {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 5px;
 }
 
-.key-container{
-    width: 510px;
+.tile {
+    /* Use vmin so it stays square based on the smaller screen side */
+    width: 11vw; 
+    height: 11vw;
+    max-width: 60px; 
+    max-height: 60px;
+    border: 2px solid #3a3a3c;
+    margin: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem; /* Slightly smaller for mobile */
+    font-weight: bold;
+    text-transform: uppercase;
+    box-sizing: border-box;
+    /* This prevents the "zoom on tap" highlight */
+    -webkit-tap-highlight-color: transparent; 
+}
+
+.key-container button {
+    width: 8vw;
+    max-width: 45px;
+    height: 8vh; /* Use vh so it doesn't take up too much vertical space */
+    max-height: 58px;
+    margin: 3px;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #818384;
+    border: none;
+    font-weight: bold;
+    /* This helps stop the double-tap zoom on buttons */
+    touch-action: manipulation; 
+}
+
+/* Adjust the keyboard for mobile */
+.key-container {
     display: flex;
     flex-wrap: wrap;
-}
-
-.key-container button{
-    width: 43px;
-    height : 58px;
-    border-radius: 4px;
-    border: none;
-    background-color: #818384;
-    margin: 4px;
+    justify-content: center;
+    width: 100%;
+    max-width: 500px;
+    margin: 20px auto;
 }
 
 .key-container button:nth-child(11){
@@ -47,23 +81,13 @@ body {
 
 .key-container button:nth-child(20),
 .key-container button:nth-child(28) {
-    width: 68px;
+    width: 15vw;
+    max-width: 80px;
 }
 
 .tile-container div{
     display: flex;
     justify-content: center;
-}
-
-.tile-container .tile{
-    width: 50px;
-    height: 50px;
-    border: 2px solid #3a3a3c;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 2px;
 }
 
 .message-container{
