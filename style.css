@@ -50,19 +50,33 @@ body {
     -webkit-tap-highlight-color: transparent; 
 }
 
+/* Default Mobile View (Flexible) */
 .key-container button {
     width: 8vw;
-    max-width: 45px;
-    height: 8vh; /* Use vh so it doesn't take up too much vertical space */
-    max-height: 58px;
+    height: 7vh; 
     margin: 3px;
     border-radius: 4px;
     cursor: pointer;
     background-color: #818384;
     border: none;
     font-weight: bold;
-    /* This helps stop the double-tap zoom on buttons */
-    touch-action: manipulation; 
+    touch-action: manipulation;
+    font-size: 1rem;
+}
+
+/* Desktop View (Fixed sizes for screens wider than 600px) */
+@media (min-width: 600px) {
+    .key-container button {
+        width: 43px;   /* Fixed width for PC */
+        height: 58px;  /* Fixed height for PC */
+        font-size: 1.2rem;
+    }
+    
+    /* Special sizing for wider buttons on PC */
+    .key-container button:nth-child(20),
+    .key-container button:nth-child(28) {
+        width: 65px;
+    }
 }
 
 /* Adjust the keyboard for mobile */
@@ -77,12 +91,6 @@ body {
 
 .key-container button:nth-child(11){
     margin-left: 30px;
-}
-
-.key-container button:nth-child(20),
-.key-container button:nth-child(28) {
-    width: 15vw;
-    max-width: 80px;
 }
 
 .tile-container div{
