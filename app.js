@@ -106,28 +106,49 @@ const checkRow = () => {
     const guess = guessRows[currentRow].join('');
     
     if (currentTile === wordle.length) {
-        flipTile();
-        
+        // 1. If it's the correct secret word, skip the dictionary check
         if (guess === wordle) {
-            showMessage('Magnificent!');
-            if (currentLevel < MOTHER_MESSAGE.length - 1) {
-                setTimeout(nextLevel, 3000);
-            } else {
-                setTimeout(() => {
-                    tileDisplay.innerHTML = '';
-                    
-                    showFinalMessage("Happy Mothers Day Love You Best Mom Ever! ❤️");
-                    isGameOver = true;
-                }, 3000);
-            }
+            submitGuess(); 
+            return;
+        }
+
+        // 2. Check the dictionary for other guesses
+        fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${guess}`)
+            .then(response => {
+                if (response.ok) {
+                    submitGuess(); // It's a real word!
+                } else {
+                    showMessage("Not a real word!");
+                }
+            })
+            .catch(() => showMessage("Connection error"));
+    }
+};
+
+// Helper function to keep code clean
+const submitGuess = () => {
+    const guess = guessRows[currentRow].join('');
+    flipTile();
+    
+    if (guess === wordle) {
+        showMessage('Magnificent!');
+        if (currentLevel < MOTHER_MESSAGE.length - 1) {
+            setTimeout(nextLevel, 3000);
         } else {
-            if (currentRow >= 5) {
+            // Your final cleanup logic here
+            setTimeout(() => {
+                tileDisplay.innerHTML = '';
+                showFinalMessage("Happy Mother's Day Love You Best Mom Ever! ❤️");
                 isGameOver = true;
-                showMessage(`Game Over! The word was ${wordle}`);
-            } else {
-                currentRow++;
-                currentTile = 0;
-            }
+            }, 3000);
+        }
+    } else {
+        if (currentRow >= 5) {
+            isGameOver = true;
+            showMessage(`Game Over! The word was ${wordle}`);
+        } else {
+            currentRow++;
+            currentTile = 0;
         }
     }
 };
